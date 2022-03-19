@@ -30,3 +30,9 @@ class ArticleSerializer(serializers.Serializer):
         instance.updated_at = validated_data.get("updated_at", instance.updated_at)
         instance.save()
         return instance
+    
+    def validate(self, data):
+        """ check that description and title are v """
+        if data["title"]  == data["description"]:
+            raise serializers.ValidationError("Title and Description must be different from each other")
+        return data
